@@ -3,25 +3,29 @@ export default {
         {
             id: 123,
             name: 'tienho'
+        },
+        {
+            id: 999,
+            name: 'quyettien'
         }
     ],
     folders: [
         {
             id: 1,
             name: 'Folder 1',
-            created: '2021-01-01',
+            createdAt: '2021-01-01',
             authorId: 123,
         },
         {
             id: 2,
             name: 'Folder 2',
-            created: '2021-01-01',
-            authorId: 1,
+            createdAt: '2021-01-01',
+            authorId: 999,
         },
         {
             id: 3,
             name: 'Folder 3',
-            created: '2021-01-01',
+            createdAt: '2021-01-01',
             authorId: 123,
         }
     ]

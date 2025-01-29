@@ -30,9 +30,16 @@ const typeDefs = `#graphql
 const resolvers = {
     Query: {
         folders: () => { return fakeData.folders }
+    },
+    Folder: {
+        author: (parent, args, context, info) => { 
+            console.log({parent, args});
+            const authorId = parent.authorId;
+            return fakeData.authors.find(author => author.id === authorId);
+            // return { id: '123', name: 'tienho'} 
+        }
     }
-};
-
+}
 const server = new ApolloServer({
     typeDefs,
     resolvers,
