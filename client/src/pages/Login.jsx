@@ -1,10 +1,14 @@
 import React from 'react'
+import { Button, Typography } from '@mui/material'
 
 const Login = () => {
   return (
-    <div>
-      Login
-    </div>
+    <>
+      <Typography variant='h5' sx={{ marginBottom: '10px' }}>Welcome to Note App</Typography>
+      <Button variant='outlined'>
+        Login with Google
+      </Button>
+    </>
   )
 }
 
