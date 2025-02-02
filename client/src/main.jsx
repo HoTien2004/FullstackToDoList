@@ -4,7 +4,7 @@ import { RouterProvider } from 'react-router-dom'
 import './index.css'
 import router from './router/index.jsx'
 import { Container } from '@mui/material'
-import './firebase/config.js'
+import './firebase/config.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
