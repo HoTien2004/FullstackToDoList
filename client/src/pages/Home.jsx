@@ -2,10 +2,12 @@ import React from 'react'
 import { Box, Grid, Typography } from '@mui/material'
 import UserMenu from '../components/UserMenu'
 import FolderList from '../components/FolderList'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLoaderData } from 'react-router-dom'
 
 
 const Home = () => {
+
+  const { folders } = useLoaderData();
 
   return (
     <>
@@ -16,9 +18,7 @@ const Home = () => {
 
       <Grid container sx={{ height: '50vh', boxShadow: '0 0 15px 0 rgb(193 193 193 / 60%)' }}>
         <Grid item xs={3} sx={{ height: '100%' }}>
-          <FolderList folders={[
-            { id: "1", name: 'plan for test' },
-            { id: "2", name: 'plan for test 2' }]} />
+          <FolderList folders={folders} />
         </Grid>
         <Grid item xs={9} sx={{ height: '100%' }}>
           <Outlet />
