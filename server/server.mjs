@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import { expressMiddleware } from '@apollo/server/express4';
 import cors from 'cors';
 import fakeData from './fakeData/index.js';
+import { log } from 'console';
 
 const app = express();
 const httpServer = http.createServer(app);   
@@ -15,7 +16,13 @@ const typeDefs = `#graphql
         id: String,
         name: String,
         createdAt: String,
-        author: Author
+        author: Author,
+        notes: [Note]
+    }
+
+    type Note {
+        id: String,
+        content: String
     }
 
     type Author {
@@ -24,12 +31,25 @@ const typeDefs = `#graphql
     }
 
     type Query {
-        folders: [Folder]
+        folders: [Folder],
+        folder(folderId: String): Folder,
+        note(noteId: String): Note,
     }
 `;
 const resolvers = {
     Query: {
-        folders: () => { return fakeData.folders }
+        folders: () => { 
+            return fakeData.folders 
+        },
+        folder: (parent, args) => {
+            const folderId = args.folderId;
+            console.log({folderId});
+            return fakeData.folders.find(folder => folder.id === folderId);
+        },
+        note: (parent, args) => {
+            const noteId = args.noteId;
+            return fakeData.notes.find(note => note.id === noteId)
+        }
     },
     Folder: {
         author: (parent, args, context, info) => { 
@@ -37,6 +57,10 @@ const resolvers = {
             const authorId = parent.authorId;
             return fakeData.authors.find(author => author.id === authorId);
             // return { id: '123', name: 'tienho'} 
+        },
+        notes: (parent, args) => {
+            console.log({parent});
+            return fakeData.notes.filter( note => note.folderId === parent.id);
         }
     }
 }
