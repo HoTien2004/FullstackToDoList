@@ -6,7 +6,8 @@ import bodyParser from 'body-parser';
 import { expressMiddleware } from '@apollo/server/express4';
 import cors from 'cors';
 import fakeData from './fakeData/index.js';
-import { log } from 'console';
+import mongoose from 'mongoose';
+import 'dotenv/config'
 
 const app = express();
 const httpServer = http.createServer(app);   
@@ -64,6 +65,11 @@ const resolvers = {
         }
     }
 }
+
+// Connect to DB
+const URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@note-app.t6us4.mongodb.net/?retryWrites=true&w=majority&appName=note-app`
+const PORT = process.env.PORT || 4000;
+
 const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -74,5 +80,12 @@ await server.start();
 
 app.use(cors(), bodyParser.json(), expressMiddleware(server));
 
-await new Promise((resolve) => httpServer.listen({ port:4000 }, resolve))
-console.log('Server ready at http://localhost:4000');
+mongoose.connect(URL).then(async () => {
+    console.log('Connected to DB');
+    await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve))
+    console.log('Server ready at http://localhost:4000');
+})
+
+
+
+
