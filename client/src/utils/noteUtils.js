@@ -43,7 +43,9 @@ export const noteLoader =  async ({ params: { noteId } }) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json',
+            Accept: 'application/json',
+            Authorization: 'Bearer '
+
         },
         body: JSON.stringify({
             query,
