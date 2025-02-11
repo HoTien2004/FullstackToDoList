@@ -3,11 +3,12 @@ import { FolderModel } from '../models/index.js'
 
 export const resolvers = {
     Query: {
-        folders: async () => { 
-            const folders = await FolderModel.find();
-            console.log(folders);
+        folders: async (parent, args, context) => { 
+            const folders = await FolderModel.find({
+                authorId: context.uid,
+            });
+            console.log({folders, context});
             return folders;
-            // return fakeData.folders 
         },
         folder: async (parent, args) => {
             const folderId = args.folderId;
@@ -38,6 +39,16 @@ export const resolvers = {
             console.log({newFolder});
             await newFolder.save();
             return newFolder;
+        },
+        register: async (parent, args) => {
+            const foundUser = await AuthorModel.findOne({ uid: args.uid });
+
+            if (!foundUser) {
+                const newUser = await AuthorModel(args);
+                await newUser.save();
+                return newUser;
+            }
+            return foundUser;
         }
     }
 }

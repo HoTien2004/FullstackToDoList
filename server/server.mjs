@@ -38,10 +38,11 @@ const authorizationJWT = async (req, res, next) => {
         getAuth().verifyIdToken(accessToken)
         .then(decodedToken => {
             console.log({decodedToken});
+            res.locals.uid = decodedToken.uid;
             next();
         })
         .catch(err => {
-            console.log(er);
+            console.log(err);
             return res.status(403).json({message: 'Forbidden', error: err});
         })
     } else {
@@ -49,7 +50,11 @@ const authorizationJWT = async (req, res, next) => {
     }
 }
 
-app.use(cors(), authorizationJWT, bodyParser.json(), expressMiddleware(server));
+app.use(cors(), authorizationJWT, bodyParser.json(), expressMiddleware(server, {
+    context: async ({req, res}) => {
+        return { uid: res.locals.uid}
+    }
+}));
 
 mongoose.connect(URL).then(async () => {
     console.log('Connected to DB');
