@@ -1,6 +1,6 @@
 export const typeDefs = `#graphql
 type Folder {
-    id: String,
+    id: String!,
     name: String,
     createdAt: String,
     author: Author,
@@ -8,18 +8,18 @@ type Folder {
 }
 
 type Note {
-    id: String,
+    id: String!,
     content: String
 }
 
 type Author {
-    id: String,
-    name: String,
+    uid: String!,
+    name: String!,
 }
 
 type Query {
     folders: [Folder],
-    folder(folderId: String): Folder,
+    folder(folderId: String!): Folder,
     note(noteId: String): Note,
 }
 

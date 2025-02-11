@@ -2,18 +2,17 @@ import React, { useContext, useEffect } from 'react';
 import { Button, Typography } from '@mui/material';
 import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
 import { AuthContext } from '../context/AuthProvider';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 
 const Login = () => {
   const auth = getAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
-  useEffect(() => {
-    if (user?.uid) {
-      navigate('/');
-    }
-  }, [user, navigate]); // Chỉ navigate khi user thay đổi
+  if (localStorage.getItem('accessToken')) {
+    // navigate('/');
+    return <Navigate to='/' />
+  }; // Chỉ navigate khi user thay đổi
 
   const handleLoginWithGoogle = async () => {
     try {
