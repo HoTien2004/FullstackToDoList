@@ -6,13 +6,13 @@ export const resolvers = {
         folders: async (parent, args, context) => { 
             const folders = await FolderModel.find({
                 authorId: context.uid,
+            }).sort({
+                updatedAt: 'desc'
             });
-            console.log({folders, context});
             return folders;
         },
         folder: async (parent, args) => {
             const folderId = args.folderId;
-            console.log({folderId});
             const foundFolder = await FolderModel.findOne({_id: folderId});
             return foundFolder;
         },
@@ -23,11 +23,11 @@ export const resolvers = {
     },
     Folder: {
         author: async (parent, args) => {
-            console.log({ parent, args });
-            return await AuthorModel.findOne({ uid: parent.authorId });
+            const authorId = parent.authorId;
+            const author = await AuthorModel.findOne({ uid: authorId})
+            return author;
         },
         notes: (parent, args) => {
-            console.log({parent});
             return fakeData.notes.filter( note => note.folderId === parent.id);
         }
     },
@@ -35,7 +35,6 @@ export const resolvers = {
         addFolder: async (parent, args, context) => {
             const newFolder = new FolderModel({...args, authorId: context.uid});
             await newFolder.save();
-            console.log({newFolder});
             return newFolder;
         },
         register: async (parent, args) => {
