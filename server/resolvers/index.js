@@ -1,5 +1,5 @@
 import fakeData from '../fakeData/index.js';
-import { FolderModel, AuthorModel } from '../models/index.js';
+import { FolderModel, AuthorModel, NoteModel } from '../models/index.js';
 
 export const resolvers = {
     Query: {
@@ -13,12 +13,13 @@ export const resolvers = {
         },
         folder: async (parent, args) => {
             const folderId = args.folderId;
-            const foundFolder = await FolderModel.findOne({_id: folderId});
+            const foundFolder = await FolderModel.findById({_id: folderId});
             return foundFolder;
         },
-        note: (parent, args) => {
+        note: async (parent, args) => {
             const noteId = args.noteId;
-            return fakeData.notes.find(note => note.id === noteId)
+            const note = await NoteModel.findById({_id: noteId});
+            return note;
         }
     },
     Folder: {
@@ -27,11 +28,19 @@ export const resolvers = {
             const author = await AuthorModel.findOne({ uid: authorId})
             return author;
         },
-        notes: (parent, args) => {
-            return fakeData.notes.filter( note => note.folderId === parent.id);
+        notes: async (parent, args) => {
+            const notes = await NoteModel.find({
+                folderId: parent.id,
+            })
+            return notes;
         }
     },
     Mutation: {
+        addNote: async (parent, args) => {
+            const newNote = new NoteModel(args);
+            await newNote.save();
+            return newNote;
+        },
         addFolder: async (parent, args, context) => {
             const newFolder = new FolderModel({...args, authorId: context.uid});
             await newFolder.save();

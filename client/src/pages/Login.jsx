@@ -30,7 +30,6 @@ export default function Login() {
         name: displayName,
       },
     });
-    console.log('register', { data });
   };
 
   if (localStorage.getItem('accessToken')) {

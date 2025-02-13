@@ -8,7 +8,6 @@ const UserMenu = () => {
     const [anchorEl, setAnchorEl] = useState(null);
 
     const open = Boolean(anchorEl)
-    // console.log("test: ", { user });
 
     const handleLogout = () => {
         auth.signOut();
