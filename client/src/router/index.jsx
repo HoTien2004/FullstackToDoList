@@ -6,7 +6,7 @@ import ProtectedRoute from "./ProtectedROute.jsx";
 import ErrorPage from "../pages/ErrorPage.jsx";
 import NoteList from "../components/NoteList.jsx";
 import Note from "../components/Note.jsx";
-import { addNewNote, noteLoader, notesLoader } from "../utils/noteUtils.js";
+import { addNewNote, noteLoader, notesLoader, updateNote } from "../utils/noteUtils.js";
 import { foldersLoader } from "../utils/folderUtils.js";
 
 const AuthLayout = () => {
@@ -42,6 +42,7 @@ const router = createBrowserRouter([
                                     {
                                         element: <Note />,
                                         path: "note/:noteId",
+                                        action: updateNote,
                                         loader: noteLoader,
                                     }
                                 ]
