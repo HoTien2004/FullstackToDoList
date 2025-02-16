@@ -27,7 +27,6 @@ export const noteLoader = async ({ params: { noteId } }) => {
     note(noteId: $noteId) {
       content
       id
-      updatedAt
     }
   }`;
 
