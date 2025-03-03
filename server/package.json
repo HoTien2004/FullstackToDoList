@@ -19,6 +19,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "firebase-admin": "^13.1.0",
+    "graphql": "^16.10.0",
     "graphql-subscriptions": "^2.0.0",
     "graphql-ws": "^5.11.0",
     "http": "^0.0.1-security",
