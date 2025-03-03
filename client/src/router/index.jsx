@@ -2,7 +2,7 @@ import { createBrowserRouter, Outlet } from "react-router-dom";
 import Login from "../pages/Login.jsx";
 import Home from "../pages/Home.jsx";
 import AuthProvider from "../context/AuthProvider.jsx";
-import ProtectedRoute from "./ProtectedROute.jsx";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 import ErrorPage from "../pages/ErrorPage.jsx";
 import NoteList from "../components/NoteList.jsx";
 import Note from "../components/Note.jsx";
