@@ -9,6 +9,10 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    mimeTypes: {
+      "js": "application/javascript",
+      "mjs": "application/javascript"
+    }
   },
   build: {
     chunkSizeWarningLimit: 3000,
